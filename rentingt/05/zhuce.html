@@ -1,0 +1,153 @@
+<!DOCTYPE html >
+<html >
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        
+<html>
+    <head>
+        <title>注册页面</title>
+        <link href="css/register.css" type="text/css" rel="stylesheet">
+        <link href="css/global.css" type="text/css" rel="stylesheet">
+        <script src="js/jquery.js"></script>
+        <style>
+            .state1{
+                color:#aaa;
+            }
+            .state2{
+                color:#000;
+            }
+            .state3{
+                color:red;
+            }
+            .state4{
+                color:green;
+            }
+        </style>
+             <script>
+   function show(){
+    var user=document.getElementById("uname").value;
+	var password=document.getElementById("password").value;
+	var sex=document.getElementsByName("sex");
+	for(var i=0;i<sex.length;i++){
+	         if(sex[i].checked==true){
+	               var con=sex[i].value;
+	               document.write("您的性别是 ："+con); document.write('<br />')
+	           }
+	       }
+    document.write("您的用户名是："+user); document.write('<br />')
+    document.write("您的密码是："+password); document.write('<br />')
+	}
+        </script>
+    </head>
+    <body>
+        <div id="layout">
+            <span class="title">个人注册</span>
+            <form name="myform">
+            <ul>
+                <li class="name">
+                	用户名:
+                	<input class="username" type="text"  id="uname" name="username"/>
+                	<span class='state1'>请输入用户名</span><br/><br/>
+                </li>
+                <li class="mima">
+                	密码:
+                	<input class="pwd" type="password" id="password" name="password" />
+                	<span class='state1'>请输入密码</span><br/><br/>
+                </li>
+                <li class="queren">
+                	确认密码:
+                	<input class="pwd2" type="password" id="passwd" name="repass" />
+                	<span class='state1'>请输入确认密码</span><br/><br/>
+                </li>
+                 <li class="sex">性别：<input type="radio" name="sex" id="man" /> 男  <input type="radio" id="woman" name="sex"/>女</li>
+                 <li class="em">
+                 	邮箱:<input type="text"name="email">
+                 	<span class='state1'>请输入邮箱</span><br/><br/> 
+                 </li>
+                 <li class="xueli">教育水平:<select name="jysp" >
+                      <option value="中专">中专</option>
+                      <option value="大专">大专</option>
+                      <option value="本科" selected>本科</option>
+                      <option value="研究生">研究生</option>
+                      </select>
+               </li>
+                 <li class="habit">兴趣:<input type="checkbox" /> 听歌 <input type="checkbox" /> 看电影<input type="checkbox" /> 学习</li>
+                 <li><div class="queren"><input class="fx" type="checkbox" checked="checked" /><p>我已阅读并同意《用户协议》</p></div></li>
+                <li><button class="submit" type="submit" >注册</button></li>
+                <li> <input type="button" value="显示表单信息" id="print" onclick="show()"/></li>
+           </ul>
+            </form>
+        </div>
+        <script>
+            $(function(){
+ 
+                var ok1=false;
+                var ok2=false;
+                var ok3=false;
+                var ok4=false;
+                // 验证用户名
+                $('input[name="username"]').focus(function(){
+                    $(this).next().text('用户名应该为6-12位之间').removeClass('state1').addClass('state2');
+                }).blur(function(){
+                    if($(this).val().length >= 6 && $(this).val().length <=12 && $(this).val()!=''){
+                        $(this).next().text('输入成功').removeClass('state1').addClass('state4');
+                        ok1=true;
+                    }else{
+                        $(this).next().text('用户名应该为6-12位之间').removeClass('state1').addClass('state3');
+                    }
+                     
+                });
+ 
+                //验证密码
+                $('input[name="password"]').focus(function(){
+                    $(this).next().text('密码应该为6-12位之间').removeClass('state1').addClass('state2');
+                }).blur(function(){
+                    if($(this).val().length >= 6 && $(this).val().length <=20 && $(this).val()!=''){
+                        $(this).next().text('输入成功').removeClass('state1').addClass('state4');
+                        ok2=true;
+                    }else{
+                        $(this).next().text('密码应该为6-12位之间').removeClass('state1').addClass('state3');
+                    }
+                     
+                });
+ 
+                //验证确认密码
+                    $('input[name="repass"]').focus(function(){
+                    $(this).next().text('输入的确认密码要和上面的密码一致,规则也要相同').removeClass('state1').addClass('state2');
+                }).blur(function(){
+                    if($(this).val().length >= 6 && $(this).val().length <=20 && $(this).val()!='' && $(this).val() == $('input[name="password"]').val()){
+                        $(this).next().text('输入成功').removeClass('state1').addClass('state4');
+                        ok3=true;
+                    }else{
+                        $(this).next().text('输入的确认密码要和上面的密码一致,规则也要相同').removeClass('state1').addClass('state3');
+                    }
+                     
+                });
+ 
+                //验证邮箱
+                $('input[name="email"]').focus(function(){
+                    $(this).next().text('请输入正确的EMAIL格式').removeClass('state1').addClass('state2');
+                }).blur(function(){
+                    if($(this).val().search(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)==-1){
+                        $(this).next().text('请输入正确的EMAIL格式').removeClass('state1').addClass('state3');
+                    }else{                  
+                        $(this).next().text('输入成功').removeClass('state1').addClass('state4');
+                        ok4=true;
+                    }
+                     
+                });
+ 
+                //提交按钮,所有验证通过方可提交
+ 
+                $('.submit').click(function(){
+                    if(ok1 && ok2 && ok3 && ok4){
+                        $('form').submit();
+                    }else{
+                        return false;
+                    }
+                });
+                 
+            });
+        </script>
+    </body>
+</html>
